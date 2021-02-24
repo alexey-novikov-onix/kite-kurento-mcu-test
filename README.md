@@ -1,0 +1,1 @@
+# KITE Kurento MCU test
