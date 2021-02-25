@@ -6,20 +6,18 @@ import org.webrtc.kite.tests.KiteBaseTest;
 import org.webrtc.kite.tests.TestRunner;
 
 public class KiteKurentoMcuTest extends KiteBaseTest {
-  
-  private String url = "https://google.com";
-  
-  @Override
-  protected void payloadHandling() {
-    if (this.payload != null) {
-      url = payload.getString("url", url);
-    }
-  }
 
-  @Override
-  public void populateTestSteps(TestRunner runner) {
-    runner.addStep(new OpenUrlStep(runner, url));
-    runner.addStep(new MyFirstCheck(runner));
-  }
+    private String url;
+
+    @Override
+    protected void payloadHandling() {
+        this.url = this.payload.getString("url");
+    }
+
+    @Override
+    public void populateTestSteps(final TestRunner runner) {
+        runner.addStep(new OpenUrlStep(runner, this.url));
+        runner.addStep(new MyFirstCheck(runner));
+    }
 
 }

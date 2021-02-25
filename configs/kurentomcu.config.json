@@ -13,7 +13,7 @@
       "description": "KurentoMcu test description",
       "testImpl": "org.onix.kurentomcu.test.KiteKurentoMcuTest",
       "payload" : {
-        "url": "https://google.com"
+        "url": "http://localhost:8080"
       }
     }
   ],

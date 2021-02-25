@@ -5,23 +5,27 @@ import io.cosmosoftware.kite.steps.TestStep;
 import org.onix.kurentomcu.test.pages.MainPage;
 
 public class OpenUrlStep extends TestStep {
-  
-  private final String url;
-  final MainPage searchPage;
 
-  public OpenUrlStep(Runner runner, String url) {
-    super(runner);
-    searchPage = new MainPage(runner);
-    this.url = url;
-  }
+    private final MainPage mainPage;
+    private final String url;
 
-  @Override
-  public String stepDescription() {
-    return "Open " + url;
-  }
-  
-  @Override
-  protected void step() {
-    searchPage.open(url);
-  }
+    public OpenUrlStep(final Runner runner, final String url) {
+        super(runner);
+        this.mainPage = new MainPage(runner);
+        this.url = url;
+    }
+
+    @Override
+    public String stepDescription() {
+        return "Open " + url;
+    }
+
+    @Override
+    protected void step() {
+        this.mainPage.open(url);
+        this.mainPage.enterUsername("user" + this.getClientID());
+        this.mainPage.clickLogin();
+        this.mainPage.clickJoin();
+    }
+
 }
