@@ -7,14 +7,11 @@ import io.cosmosoftware.kite.steps.TestCheck;
 import io.cosmosoftware.kite.util.TestUtils;
 import org.onix.kurentomcu.test.pages.MainPage;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 public class VideoCheck extends TestCheck {
 
-    private static final int TIMEOUT_IN_MILLISECONDS = 5000;
-    private static final int DURATION_IN_MILLISECONDS = 500;
+    private static final int TIMEOUT_IN_MILLISECONDS = 7000;
+    private static final int DURATION_IN_MILLISECONDS = 800;
     private static final String VIDEO_CURRENT_TIME_SCRIPT = "videos=document.getElementsByTagName('video');" +
             "return videos[1].currentTime;";
 
@@ -32,28 +29,31 @@ public class VideoCheck extends TestCheck {
 
     @Override
     protected void step() throws KiteTestException {
+        waitForVideoToLoad();
+
+        this.logger.info("Looking for video objects");
+
         try {
-            waitForVideoToLoad();
-            this.logger.info("Looking for video objects");
-            final List<WebElement> videos = this.mainPage.getVideoElements();
             if (this.mainPage.getVideoElements().size() != 2) {
                 throw new KiteTestException("Unable to find video elements on the page", Status.FAILED);
             }
-            final String videoCheckOutput = TestUtils.videoCheck(this.webDriver, 0);
-            final String videoCheckInput = TestUtils.videoCheck(this.webDriver, 1);
-            this.logger.error("Checks - " + videoCheckOutput + " - " + videoCheckInput);
-            if (!"video".equalsIgnoreCase(videoCheckOutput)) {
-                this.reporter.textAttachment(report, "Sent Video", videoCheckOutput, "plain");
-                throw new KiteTestException("The first video is " + videoCheckOutput, Status.FAILED);
+
+            final String videoLocalCheck = TestUtils.videoCheck(this.webDriver, 0);
+            final String videoRemoteCheck = TestUtils.videoCheck(this.webDriver, 1);
+
+            if (!"video".equalsIgnoreCase(videoLocalCheck)) {
+                this.reporter.textAttachment(report, "Sent Video", videoLocalCheck, "plain");
+                throw new KiteTestException("Local video is " + videoLocalCheck, Status.FAILED);
             }
-            if (!"video".equalsIgnoreCase(videoCheckInput)) {
-                this.reporter.textAttachment(report, "Sent Video", videoCheckInput, "plain");
-                throw new KiteTestException("The first video is " + videoCheckInput, Status.FAILED);
+
+            if (!"video".equalsIgnoreCase(videoRemoteCheck)) {
+                this.reporter.textAttachment(report, "Sent Video", videoRemoteCheck, "plain");
+                throw new KiteTestException("Remote video is " + videoRemoteCheck, Status.FAILED);
             }
-        } catch (KiteTestException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new KiteTestException("Error looking for the video", Status.BROKEN, e);
+        } catch (KiteTestException kiteTestException) {
+            throw kiteTestException;
+        } catch (Exception exception) {
+            throw new KiteTestException("Error looking for the video", Status.BROKEN, exception);
         }
     }
 

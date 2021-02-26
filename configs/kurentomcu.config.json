@@ -9,7 +9,7 @@
   "tests": [
     {
       "name": "KurentoMcu Test %ts",
-      "tupleSize": 1,
+      "tupleSize": 5,
       "description": "KurentoMcu test description",
       "testImpl": "org.onix.kurentomcu.test.KiteKurentoMcuTest",
       "payload" : {
