@@ -5,6 +5,8 @@ import io.cosmosoftware.kite.pages.BasePage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class MainPage extends BasePage {
 
     private static final int TIMEOUT_IN_SECONDS = 20;
@@ -17,6 +19,9 @@ public class MainPage extends BasePage {
 
     @FindBy(id = "join")
     private WebElement joinButton;
+
+    @FindBy(tagName = "video")
+    private List<WebElement> videos;
 
     public MainPage(final Runner runner) {
         super(runner);
@@ -37,6 +42,10 @@ public class MainPage extends BasePage {
     public void enterUsername(final String username) {
         this.username.clear();
         this.username.sendKeys(username);
+    }
+
+    public List<WebElement> getVideoElements() {
+        return this.videos;
     }
 
 }
