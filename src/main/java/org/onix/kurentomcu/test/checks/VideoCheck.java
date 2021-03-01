@@ -1,5 +1,6 @@
 package org.onix.kurentomcu.test.checks;
 
+import io.cosmosoftware.kite.entities.VideoQuality;
 import io.cosmosoftware.kite.exception.KiteTestException;
 import io.cosmosoftware.kite.interfaces.Runner;
 import io.cosmosoftware.kite.report.Status;
@@ -10,16 +11,17 @@ import org.openqa.selenium.JavascriptExecutor;
 
 public class VideoCheck extends TestCheck {
 
-    private static final int TIMEOUT_IN_MILLISECONDS = 7000;
-    private static final int DURATION_IN_MILLISECONDS = 800;
-    private static final String VIDEO_CURRENT_TIME_SCRIPT = "videos=document.getElementsByTagName('video');" +
-            "return videos[1].currentTime;";
+    private static final String VIDEO_CURRENT_TIME_SCRIPT = "return document.getElementById('remote-video').currentTime;";
 
     private final MainPage mainPage;
+    private final int videoDurationInSeconds;
+    private final int waitAroundInMilliseconds;
 
-    public VideoCheck(final Runner runner) {
+    public VideoCheck(final Runner runner, final int videoDurationInSeconds, final int waitAroundInMilliseconds) {
         super(runner);
         this.mainPage = new MainPage(runner);
+        this.videoDurationInSeconds = videoDurationInSeconds;
+        this.waitAroundInMilliseconds = waitAroundInMilliseconds;
     }
 
     @Override
@@ -41,12 +43,12 @@ public class VideoCheck extends TestCheck {
             final String videoLocalCheck = TestUtils.videoCheck(this.webDriver, 0);
             final String videoRemoteCheck = TestUtils.videoCheck(this.webDriver, 1);
 
-            if (!"video".equalsIgnoreCase(videoLocalCheck)) {
+            if (!VideoQuality.VIDEO.toString().equalsIgnoreCase(videoLocalCheck)) {
                 this.reporter.textAttachment(report, "Sent Video", videoLocalCheck, "plain");
                 throw new KiteTestException("Local video is " + videoLocalCheck, Status.FAILED);
             }
 
-            if (!"video".equalsIgnoreCase(videoRemoteCheck)) {
+            if (!VideoQuality.VIDEO.toString().equalsIgnoreCase(videoRemoteCheck)) {
                 this.reporter.textAttachment(report, "Sent Video", videoRemoteCheck, "plain");
                 throw new KiteTestException("Remote video is " + videoRemoteCheck, Status.FAILED);
             }
@@ -58,18 +60,17 @@ public class VideoCheck extends TestCheck {
     }
 
     private void waitForVideoToLoad() {
-        final long startTime = System.currentTimeMillis();
-        long elapsedTime = 0;
+        TestUtils.waitAround(this.videoDurationInSeconds * 1000);
 
-        while (elapsedTime < TIMEOUT_IN_MILLISECONDS || this.getVideoCurrentTime() < 3) {
-            elapsedTime = System.currentTimeMillis() - startTime;
-
-            TestUtils.waitAround(DURATION_IN_MILLISECONDS);
+        while (this.getVideoCurrentTime() <= this.videoDurationInSeconds) {
+            TestUtils.waitAround(this.waitAroundInMilliseconds);
         }
     }
 
     private double getVideoCurrentTime() {
-        return (double) ((JavascriptExecutor) this.webDriver).executeScript(VIDEO_CURRENT_TIME_SCRIPT);
+        final Object currentTime = ((JavascriptExecutor) this.webDriver).executeScript(VIDEO_CURRENT_TIME_SCRIPT);
+
+        return ((Number) currentTime).doubleValue();
     }
 
 }

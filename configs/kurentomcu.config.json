@@ -13,7 +13,9 @@
       "description": "KurentoMcu test description",
       "testImpl": "org.onix.kurentomcu.test.KiteKurentoMcuTest",
       "payload" : {
-        "url": "http://localhost:8080"
+        "url": "http://localhost:8080",
+        "videoDurationInSeconds": 5,
+        "waitAroundInMilliseconds": 500
       }
     }
   ],
