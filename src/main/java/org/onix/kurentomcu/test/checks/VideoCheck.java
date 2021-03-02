@@ -41,7 +41,7 @@ public class VideoCheck extends TestCheck {
             }
 
             final String videoLocalCheck = TestUtils.videoCheck(this.webDriver, 0);
-            final String videoRemoteCheck = TestUtils.videoCheck(this.webDriver, 1);
+            final String videoRemoteCheck = TestUtils.videoQualityCheck(this.webDriver, 1);
 
             if (!VideoQuality.VIDEO.toString().equalsIgnoreCase(videoLocalCheck)) {
                 this.reporter.textAttachment(report, "Sent Video", videoLocalCheck, "plain");
