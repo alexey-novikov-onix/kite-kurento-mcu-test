@@ -29,6 +29,7 @@ public class VideoCheckStep extends TestStep {
     @Override
     protected void step() throws KiteTestException {
         TestUtils.waitAround((this.videoDurationInSeconds + this.userId) * 1000);
+
         this.logger.info("Looking for video objects");
 
         try {

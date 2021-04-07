@@ -28,6 +28,7 @@ public class JoinRoomStep extends TestStep {
     @Override
     protected void step() {
         TestUtils.waitAround(this.userId * 1000);
+
         this.mainPage.open(url);
 
         this.mainPage.enterUsername("user" + this.getClientID());
