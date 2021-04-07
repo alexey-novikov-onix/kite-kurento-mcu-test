@@ -9,12 +9,14 @@ public class JoinRoomStep extends TestStep {
 
     private final MainPage mainPage;
     private final String url;
+    private final int userId;
     private final int roomId;
 
-    public JoinRoomStep(final Runner runner, final String url, final int roomId) {
+    public JoinRoomStep(final Runner runner, final String url, final int userId, final int roomId) {
         super(runner);
         this.mainPage = new MainPage(runner);
         this.url = url;
+        this.userId = userId;
         this.roomId = roomId;
     }
 
@@ -25,8 +27,7 @@ public class JoinRoomStep extends TestStep {
 
     @Override
     protected void step() {
-        int clientId = Integer.parseInt(this.runner.getClientName());
-        TestUtils.waitAround(clientId * 1000);
+        TestUtils.waitAround(this.userId * 1000);
         this.mainPage.open(url);
 
         this.mainPage.enterUsername("user" + this.getClientID());

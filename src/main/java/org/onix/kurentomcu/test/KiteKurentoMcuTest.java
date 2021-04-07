@@ -20,10 +20,10 @@ public class KiteKurentoMcuTest extends KiteBaseTest {
 
     @Override
     public void populateTestSteps(final TestRunner runner) {
-        for (int roomId = 1; roomId <= this.roomCount; roomId++) {
+        int userId = Integer.parseInt(this.runner.getClientName());
+        int roomId = userId > this.roomCount ? userId - this.roomCount : userId;
 
-        }
-        runner.addStep(new JoinRoomStep(runner, this.url));
+        runner.addStep(new JoinRoomStep(runner, this.url, userId, roomId));
         runner.addStep(new VideoCheckStep(runner, this.videoDurationInSeconds));
     }
 

@@ -12,11 +12,13 @@ public class VideoCheckStep extends TestStep {
 
     private final MainPage mainPage;
     private final int videoDurationInSeconds;
+    private final int userId;
 
-    public VideoCheckStep(final Runner runner, final int videoDurationInSeconds) {
+    public VideoCheckStep(final Runner runner, final int videoDurationInSeconds, final int userId) {
         super(runner);
         this.mainPage = new MainPage(runner);
         this.videoDurationInSeconds = videoDurationInSeconds;
+        this.userId = userId;
     }
 
     @Override
@@ -26,9 +28,7 @@ public class VideoCheckStep extends TestStep {
 
     @Override
     protected void step() throws KiteTestException {
-        int clientId = Integer.parseInt(this.runner.getClientName());
-
-        TestUtils.waitAround((this.videoDurationInSeconds + clientId) * 1000);
+        TestUtils.waitAround((this.videoDurationInSeconds + this.userId) * 1000);
         this.logger.info("Looking for video objects");
 
         try {
