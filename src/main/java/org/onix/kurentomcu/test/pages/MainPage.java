@@ -2,6 +2,7 @@ package org.onix.kurentomcu.test.pages;
 
 import io.cosmosoftware.kite.interfaces.Runner;
 import io.cosmosoftware.kite.pages.BasePage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
@@ -15,14 +16,14 @@ public class MainPage extends BasePage {
     @FindBy(id = "username")
     private WebElement username;
 
-    @FindBy(id = "room")
-    private WebElement room;
-
     @FindBy(id = "login")
     private WebElement loginButton;
 
     @FindBy(id = "join")
     private WebElement joinButton;
+
+    @FindBy(id = "leave")
+    private WebElement leaveButton;
 
     @FindBy(tagName = "video")
     private List<WebElement> videos;
@@ -43,15 +44,17 @@ public class MainPage extends BasePage {
         this.joinButton.click();
     }
 
+    public void clickLeave() {
+        this.leaveButton.click();
+    }
+
     public void enterUsername(final String username) {
         this.username.clear();
         this.username.sendKeys(username);
     }
 
-    public void enterRoom(final int room) {
-        Select rooms = new Select(this.room);
-        rooms.deselectAll();
-        rooms.selectByValue(Integer.toString(room));
+    public void enterRoom(final int roomId) {
+        new Select(this.webDriver.findElement(By.id("room"))).selectByValue(Integer.toString(roomId));
     }
 
     public List<WebElement> getVideoElements() {

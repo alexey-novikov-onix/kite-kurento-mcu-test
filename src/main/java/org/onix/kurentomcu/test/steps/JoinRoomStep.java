@@ -22,7 +22,7 @@ public class JoinRoomStep extends TestStep {
 
     @Override
     public String stepDescription() {
-        return "Open " + url;
+        return "User " + this.userId + " joining to room " + this.roomId;
     }
 
     @Override

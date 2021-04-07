@@ -8,13 +8,13 @@ import io.cosmosoftware.kite.steps.TestStep;
 import io.cosmosoftware.kite.util.TestUtils;
 import org.onix.kurentomcu.test.pages.MainPage;
 
-public class VideoCheckStep extends TestStep {
+public class VideoCheck extends TestStep {
 
     private final MainPage mainPage;
     private final int videoDurationInSeconds;
     private final int userId;
 
-    public VideoCheckStep(final Runner runner, final int videoDurationInSeconds, final int userId) {
+    public VideoCheck(final Runner runner, final int videoDurationInSeconds, final int userId) {
         super(runner);
         this.mainPage = new MainPage(runner);
         this.videoDurationInSeconds = videoDurationInSeconds;
