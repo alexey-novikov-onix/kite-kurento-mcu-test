@@ -22,20 +22,19 @@ public class JoinRoomStep extends TestStep {
 
     @Override
     public String stepDescription() {
-        return "User " + this.userId + " joining to room " + this.roomId;
+        return "Step: user " + this.userId + " joined to room " + this.roomId;
     }
 
     @Override
     protected void step() {
         TestUtils.waitAround(this.userId * 1000);
-
         this.mainPage.open(url);
 
+        TestUtils.waitAround(1000);
         this.mainPage.enterUsername("user" + this.getClientID());
         this.mainPage.clickLogin();
 
         TestUtils.waitAround(2000);
-
         this.mainPage.enterRoom(this.roomId);
         this.mainPage.clickJoin();
     }

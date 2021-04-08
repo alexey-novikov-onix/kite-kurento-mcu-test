@@ -9,13 +9,11 @@ import org.webrtc.kite.tests.TestRunner;
 public class KiteKurentoMcuTest extends KiteBaseTest {
 
     private String url;
-    private int videoDurationInSeconds;
     private int roomCount;
 
     @Override
     protected void payloadHandling() {
         this.url = this.payload.getString("url");
-        this.videoDurationInSeconds = this.payload.getInt("videoDurationInSeconds");
         this.roomCount = this.payload.getInt("roomCount");
     }
 
@@ -27,9 +25,11 @@ public class KiteKurentoMcuTest extends KiteBaseTest {
             roomId = userId > this.roomCount ? userId - this.roomCount : userId;
         }
 
+        final int timeout = this.tupleSize * 6 * 1000;
+
         runner.addStep(new JoinRoomStep(runner, this.url, userId, roomId));
-        runner.addStep(new VideoCheck(runner, this.videoDurationInSeconds, userId));
-        runner.addStep(new LeaveRoomStep(runner, this.videoDurationInSeconds, userId, roomId));
+        runner.addStep(new VideoCheck(runner, timeout, userId));
+        runner.addStep(new LeaveRoomStep(runner, timeout, userId, roomId));
     }
 
 }

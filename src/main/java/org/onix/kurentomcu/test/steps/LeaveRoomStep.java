@@ -10,24 +10,24 @@ public class LeaveRoomStep extends TestStep {
     private final MainPage mainPage;
     private final int userId;
     private final int roomId;
-    private final int videoDurationInSeconds;
+    private final int timeout;
 
-    public LeaveRoomStep(final Runner runner, final int videoDurationInSeconds, final int userId, final int roomId) {
+    public LeaveRoomStep(final Runner runner, final int timeout, final int userId, final int roomId) {
         super(runner);
         this.mainPage = new MainPage(runner);
-        this.videoDurationInSeconds = videoDurationInSeconds;
+        this.timeout = timeout;
         this.userId = userId;
         this.roomId = roomId;
     }
 
     @Override
     public String stepDescription() {
-        return "User " + userId + " leave room " + roomId;
+        return "Step: user " + this.userId + " leaving room " + this.roomId;
     }
 
     @Override
     protected void step() {
-        TestUtils.waitAround(this.videoDurationInSeconds / 3 * 1000);
+        TestUtils.waitAround(this.timeout * 2);
         this.mainPage.clickLeave();
     }
 
