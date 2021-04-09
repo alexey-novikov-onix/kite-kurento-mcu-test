@@ -22,7 +22,15 @@ public class KiteKurentoMcuTest extends KiteBaseTest {
         final int userId = Integer.parseInt(runner.getClientName()) + 1;
         int roomId = 1;
         if (this.roomCount > 1) {
-            roomId = userId > this.roomCount ? userId - this.roomCount : userId;
+            if (userId > this.roomCount) {
+                roomId = userId - this.roomCount;
+
+                while (roomId > this.roomCount) {
+                    roomId = roomId - this.roomCount;
+                }
+            } else {
+                roomId = userId;
+            }
         }
 
         final int timeout = this.tupleSize * 6 * 1000;
