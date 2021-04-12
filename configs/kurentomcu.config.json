@@ -8,22 +8,21 @@
   ],
   "tests": [
     {
-      "name": "KurentoMcu Test %ts",
-      "tupleSize": 5,
+      "name": "1. KurentoMcu Test %ts for 5 users and 1 room",
+      "tupleSize": 50,
       "description": "KurentoMcu test description",
       "testImpl": "org.onix.kurentomcu.test.KiteKurentoMcuTest",
-      "payload" : {
+      "payload": {
         "url": "http://localhost:8080",
-        "videoDurationInSeconds": 5,
-        "waitAroundInMilliseconds": 500
+        "roomCount": 3
       }
     }
   ],
   "clients": [
     {
       "browserName": "chrome",
-      "platform": "localhost",
-      "headless": false
+      "platform": "LINUX",
+      "headless": true
     }
   ]
 }

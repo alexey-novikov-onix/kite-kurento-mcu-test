@@ -34,7 +34,7 @@ public class VideoCheck extends TestStep {
 
         try {
             if (this.mainPage.getVideoElements().size() != 2) {
-                throw new KiteTestException("Unable to find video elements on the page for user " + userId, Status.FAILED);
+                throw new KiteTestException("Unable to find video elements on the page for user " + this.userId, Status.FAILED);
             }
 
             final String videoLocalCheck = TestUtils.videoCheck(this.webDriver, 0);
@@ -68,7 +68,7 @@ public class VideoCheck extends TestStep {
         } catch (KiteTestException kiteTestException) {
             throw kiteTestException;
         } catch (Exception exception) {
-            throw new KiteTestException("Error looking for the video for user " + userId, Status.BROKEN, exception);
+            throw new KiteTestException("Error looking for the video for user " + this.userId, Status.BROKEN, exception);
         }
     }
 
