@@ -8,7 +8,7 @@
   ],
   "tests": [
     {
-      "name": "1. KurentoMcu Test %ts for 50 users and 3 room",
+      "name": "KurentoMcu Test %ts for 50 users and 3 room",
       "tupleSize": 50,
       "description": "KurentoMcu test description",
       "testImpl": "org.onix.kurentomcu.test.KiteKurentoMcuTest",
